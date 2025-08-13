@@ -1,0 +1,37 @@
+name: Gradle Java Build
+
+# Trigger workflow on push or pull request to main branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up JDK 21
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle  # caches Gradle dependencies
+
+      # Step 3: Build with Gradle
+      - name: Build project
+        run: ./gradlew build --no-daemon
+
+      # Step 4: Run tests
+      - name: Run tests
+        run: ./gradlew test --no-daemon
+
+      # Optional: Print build success message
+      - name: Build completed
+        run: echo "Gradle build and tests completed successfully!"
