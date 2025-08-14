@@ -6,15 +6,21 @@ group = 'org.example'
 version = '1.0'
 
 repositories {
-    mavenCentral()
+    mavenCentral {
+        metadataSources {
+            mavenPom()       // look for POM first
+            artifact()       // also allow raw JARs without POM
+        }
+    }
 }
 
 dependencies {
     implementation 'io.github.cdimascio:dotenv-java:3.2.0'
-
+    implementation 'com.massisframework:j-text-utils:0.3.4'
     implementation 'org.postgresql:postgresql:42.6.0'
     implementation 'org.apache.logging.log4j:log4j-api:2.23.1'
     implementation 'org.apache.logging.log4j:log4j-core:2.23.1'
+    implementation 'de.vandermeer:asciitable:0.3.2'
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
     testImplementation 'org.junit.platform:junit-platform-launcher:1.9.3'
